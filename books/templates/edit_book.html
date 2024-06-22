@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit Book
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="edit">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="titleInput">Titulo</label>
+        <input type="text" name="titulo" id="titulo" class="form-control" value="{{book.titulo}}">
+    </div>
+    <div class="form-group">
+        <label  for="editorialInput">Editorial</label>
+        <input type="text" name="editorial" id="editorial" class="form-control" value="{{book.editorial}}">
+    </div>
+    <div class="form-group">
+        <label  for="stateInput">Estado</label>
+        <select name="state" id="id_state">
+            {% for id, value in states %}
+                <option value="{{id}}" {% if book.state == id %} selected="selected" {% endif %} >{{value}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <label  for="stateInput">Tipo</label>
+    {% for id,value in types %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="id_type_{{forloop.counter0}}" value="{{id}}" {% if book.type == id %}checked {% endif %}>
+        <label class="form-check-label" for="exampleRadios1">
+            {{value}}
+        </label>
+    </div>
+    {% endfor %}
+    <br>
+    <button type="submit" class="btn btn-primary">Update Book</button>
+</form>
+{% endblock %}
